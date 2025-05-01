@@ -18,9 +18,11 @@ Bu proje, tropik tatil temalı bir web sayfasıdır. TailwindCSS ile tasarlanmı
 - 🎨 Temiz ve düzenli HTML yapısı
 
 ## 📸 Ekran Görüntüsü
-*(Görsel eklemek istersen buraya bir `screenshots/anasayfa.png` gibi görsel yolu ekleyebilirsin.)*
+*(Görsel eklemek istersen buraya bir `![image](https://github.com/user-attachments/assets/2332ea4f-d6a9-477a-8c45-b6a146f57bfc)` gibi görsel yolu ekleyebilirsin.)*
+*(Görsel eklemek istersen buraya bir `![image](https://github.com/user-attachments/assets/92262202-01ee-41b0-aa0f-ec9a2f60812a)` gibi görsel yolu ekleyebilirsin.)*
+*(Görsel eklemek istersen buraya bir `![image](https://github.com/user-attachments/assets/19be7e77-b7b7-4ddc-a8d3-90b9ef955eae)` gibi görsel yolu ekleyebilirsin.)*
 
 ## 📁 Projeyi Çalıştırmak İçin
 1. Bu repoyu klonla:
    ```bash
-   git clone https://github.com/kullaniciAdin/tropik-maceralar-web-projesi.git
+   [git clone https://github.com/kullaniciAdin/tropik-maceralar-web-projesi.git](https://github.com/oztekinzeynepnur/tropik-maceralar.git)
