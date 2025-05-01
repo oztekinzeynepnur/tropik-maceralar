@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tropik Maceralar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/ScrollTrigger.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'wave': 'wave 3s ease-in-out infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'shine': 'shine 1.5s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        wave: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        },
+                        shine: {
+                            '0%': { backgroundPosition: '200% center' },
+                            '100%': { backgroundPosition: '-200% center' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .paradise-gradient {
+            background: linear-gradient(120deg, #ff6b6b, #4ecdc4, #45b7d1);
+            background-size: 200% auto;
+            animation: gradient 15s ease infinite;
+        }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .palm-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0c16.569 0 30 13.431 30 30S46.569 60 30 60 0 46.569 0 30 13.431 0 30 0zm0 15c-8.284 0-15 6.716-15 15s6.716 15 15 15 15-6.716 15-15-6.716-15-15-15z' fill='%234ecdc4' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        .glass-card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .shine-text {
+            background: linear-gradient(to right, #ff6b6b, #4ecdc4, #45b7d1, #ff6b6b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 200% auto;
+            animation: shine 3s linear infinite;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-content {
+            position: relative;
+            margin: auto;
+            max-width: 90%;
+            max-height: 90%;
+        }
+        .modal img {
+            max-height: 90vh;
+            object-fit: contain;
+        }
+        .success-message {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem;
+            background: rgba(0, 255, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body class="paradise-gradient palm-pattern min-h-screen text-white overflow-x-hidden">
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 glass-card">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-3xl font-bold shine-text">🌴 Tropik Maceralar</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#destinations" class="hover:text-yellow-300 transition-colors">Destinasyonlar</a>
+                    <a href="#experiences" class="hover:text-yellow-300 transition-colors">Deneyimler</a>
+                    <a href="#gallery" class="hover:text-yellow-300 transition-colors">Galeri</a>
+                    <a href="#contact" class="hover:text-yellow-300 transition-colors">İletişim</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center relative pt-20">
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/50"></div>
+        </div>
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <h1 class="text-6xl md:text-8xl font-bold mb-6 animate-float">
+                Cennet Burada 🏖️
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 opacity-90">Unutulmaz tatil deneyimleri için rehberiniz</p>
+            <button onclick="showDestinations()" class="bg-yellow-400 hover:bg-yellow-300 text-black px-8 py-4 rounded-full font-bold transform hover:scale-105 transition-transform">
+                Maceraya Başla
+            </button>
+        </div>
+    </section>
+
+    <!-- Destinations -->
+    <section id="destinations" class="py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-12 shine-text">Popüler Destinasyonlar</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Destination Card 1 -->
+                <div class="glass-card rounded-xl p-6 transform hover:scale-105 transition-transform" data-aos="fade-up">
+                    <img src="https://picsum.photos/400/300" alt="Destination 1" class="rounded-lg w-full mb-4 hover:opacity-90 transition-opacity">
+                    <h3 class="text-2xl font-bold mb-2">Maldivler</h3>
+                    <p class="text-gray-200 mb-4">Kristal berraklığında sular ve beyaz kumlu plajlar</p>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-yellow-400">⭐</span>
+                        <span>4.9/5</span>
+                    </div>
+                </div>
+
+                <!-- Destination Card 2 -->
+                <div class="glass-card rounded-xl p-6 transform hover:scale-105 transition-transform" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://picsum.photos/401/300" alt="Destination 2" class="rounded-lg w-full mb-4 hover:opacity-90 transition-opacity">
+                    <h3 class="text-2xl font-bold mb-2">Bali</h3>
+                    <p class="text-gray-200 mb-4">Egzotik tapınaklar ve muhteşem sahiller</p>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-yellow-400">⭐</span>
+                        <span>4.8/5</span>
+                    </div>
+                </div>
+
+                <!-- Destination Card 3 -->
+                <div class="glass-card rounded-xl p-6 transform hover:scale-105 transition-transform" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://picsum.photos/402/300" alt="Destination 3" class="rounded-lg w-full mb-4 hover:opacity-90 transition-opacity">
+                    <h3 class="text-2xl font-bold mb-2">Phuket</h3>
+                    <p class="text-gray-200 mb-4">Renkli gece hayatı ve muhteşem yemekler</p>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-yellow-400">⭐</span>
+                        <span>4.7/5</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experiences -->
+    <section id="experiences" class="py-20 bg-black/20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-12 shine-text">Özel Deneyimler</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Experience 1 -->
+                <div class="flex items-center space-x-6" data-aos="fade-right">
+                    <div class="text-6xl animate-wave">🏊‍♂️</div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-2">Dalış Deneyimi</h3>
+                        <p class="text-gray-200">Mercan resiflerini keşfedin ve egzotik deniz yaşamını görün</p>
+                    </div>
+                </div>
+
+                <!-- Experience 2 -->
+                <div class="flex items-center space-x-6" data-aos="fade-left">
+                    <div class="text-6xl animate-wave">🌅</div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-2">Gün Batımı Turu</h3>
+                        <p class="text-gray-200">Lüks bir yatta şampanya eşliğinde gün batımının keyfini çıkarın</p>
+                    </div>
+                </div>
+
+                <!-- Experience 3 -->
+                <div class="flex items-center space-x-6" data-aos="fade-right">
+                    <div class="text-6xl animate-wave">🍹</div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-2">Kokteyl Workshop</h3>
+                        <p class="text-gray-200">Yerel içecekleri hazırlamayı öğrenin ve tadını çıkarın</p>
+                    </div>
+                </div>
+
+                <!-- Experience 4 -->
+                <div class="flex items-center space-x-6" data-aos="fade-left">
+                    <div class="text-6xl animate-wave">🏄‍♂️</div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-2">Sörf Dersleri</h3>
+                        <p class="text-gray-200">Profesyonel eğitmenlerle sörf yapmayı öğrenin</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery" class="py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-12 shine-text">Galeri</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <img src="https://picsum.photos/403/300" alt="Gallery 1" class="w-full rounded-lg hover:scale-105 transition-transform cursor-pointer gallery-img" data-aos="zoom-in">
+                <img src="https://picsum.photos/404/300" alt="Gallery 2" class="w-full rounded-lg hover:scale-105 transition-transform cursor-pointer gallery-img" data-aos="zoom-in" data-aos-delay="100">
+                <img src="https://picsum.photos/405/300" alt="Gallery 3" class="w-full rounded-lg hover:scale-105 transition-transform cursor-pointer gallery-img" data-aos="zoom-in" data-aos-delay="200">
+                <img src="https://picsum.photos/406/300" alt="Gallery 4" class="w-full rounded-lg hover:scale-105 transition-transform cursor-pointer gallery-img" data-aos="zoom-in" data-aos-delay="300">
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-20 bg-black/20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-12 shine-text">İletişime Geçin</h2>
+            <div class="max-w-lg mx-auto glass-card rounded-xl p-8">
+                <form id="contactForm" class="space-y-6">
+                    <div>
+                        <input type="text" id="name" placeholder="Adınız" required class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 focus:border-yellow-400 focus:outline-none transition-colors">
+                    </div>
+                    <div>
+                        <input type="email" id="email" placeholder="E-posta Adresiniz" required class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 focus:border-yellow-400 focus:outline-none transition-colors">
+                    </div>
+                    <div>
+                        <textarea id="message" placeholder="Mesajınız" required rows="4" class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 focus:border-yellow-400 focus:outline-none transition-colors"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-3 rounded-lg transform hover:scale-105 transition-transform">
+                        Gönder
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <div class="modal-content">
+            <img id="modalImage" src="" alt="Büyük Görüntü">
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <div id="successMessage" class="success-message">
+        Mesajınız başarıyla gönderildi! 🌴
+    </div>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Parallax Effect
+        document.addEventListener('mousemove', (e) => {
+            const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
+            const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
+            
+            gsap.to('.paradise-gradient', {
+                duration: 1,
+                x: moveX,
+                y: moveY,
+                ease: 'power1.out'
+            });
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Gallery Modal
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const galleryImages = document.querySelectorAll('.gallery-img');
+
+        galleryImages.forEach(img => {
+            img.addEventListener('click', () => {
+                modalImg.src = img.src;
+                modal.classList.add('active');
+            });
+        });
+
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+
+        // Form Submission
+        const contactForm = document.getElementById('contactForm');
+        const successMessage = document.getElementById('successMessage');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Form verilerini al
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            // Form verilerini konsola yazdır (gerçek uygulamada sunucuya gönderilir)
+            console.log('Form verileri:', { name, email, message });
+
+            // Formu temizle
+            contactForm.reset();
+
+            // Başarı mesajını göster
+            successMessage.style.display = 'block';
+            
+            // 3 saniye sonra başarı mesajını gizle
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 3000);
+        });
+
+        // Maceraya Başla butonu
+        function showDestinations() {
+            document.getElementById('destinations').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // Destinasyon kartlarına tıklama efekti
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('click', () => {
+                card.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    card.style.transform = 'scale(1)';
+                }, 200);
+            });
+        });
+    </script>
+</body>
+</html>
